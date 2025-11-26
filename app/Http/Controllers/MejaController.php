@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Meja;
 
 class MejaController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware will be handled by routes
+    }
     /**
      * Display a listing of the resource.
      */

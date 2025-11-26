@@ -148,7 +148,7 @@
                                             {{ ucfirst($order->status_order) }}
                                         </span>
                                     </div>
-                                    <p class="text-sm text-gray-600 mt-1">{{ $order->tanggal->format('d M Y, H:i') }}</p>
+                                    <p class="text-sm text-gray-600 mt-1">{{ $order->tanggal?->format('d M Y, H:i') ?? '-' }}</p>
                                     <p class="text-sm text-gray-600">{{ $order->detailOrders->count() }} items • Rp. {{ number_format($order->total_harga, 0, ',', '.') }}</p>
                                 </div>
                             </div>

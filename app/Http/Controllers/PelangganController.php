@@ -9,15 +9,36 @@ use App\Models\Order;
 use App\Models\DetailOrder;
 use App\Models\Meja;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PelangganController extends Controller
 {
     public function dashboard()
     {
-        $featuredMasakan = Masakan::tersedia()->take(8)->get();
-        $categories = Masakan::select('kategori')->distinct()->pluck('kategori')->filter();
+        try {
+            // Debug: Log method call
+            Log::info('PelangganController::dashboard called for user: ' . auth()->id());
+            
+            $featuredMasakan = Masakan::tersedia()->take(8)->get();
+            $categories = Masakan::select('kategori')->distinct()->pluck('kategori')->filter();
 
-        return view('pelanggan.dashboard', compact('featuredMasakan', 'categories'));
+            // Debug: Log calculated values
+            Log::info('Pelanggan dashboard data calculated', [
+                'user_id' => auth()->id(),
+                'featuredMasakan_count' => $featuredMasakan->count(),
+                'categories_count' => $categories->count(),
+                'categories' => $categories->toArray()
+            ]);
+
+            return view('pelanggan.dashboard', compact('featuredMasakan', 'categories'));
+        } catch (\Exception $e) {
+            Log::error('PelangganController::dashboard error: ' . $e->getMessage());
+            // Return with default values to prevent white screen
+            return view('pelanggan.dashboard', [
+                'featuredMasakan' => collect([]),
+                'categories' => collect([])
+            ]);
+        }
     }
 
     public function menu()

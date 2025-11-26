@@ -151,6 +151,10 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
+        .sidebar-transition.visible {
+            display: flex !important;
+        }
+        
         .scrollbar-hide {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -171,7 +175,7 @@
 <body class="h-full overflow-hidden bg-gray-50 font-sans">
     <div class="flex h-full">
         <!-- Modern Sidebar -->
-        <aside id="sidebar" class="sidebar-transition bg-white border-r border-gray-200 w-72 min-h-screen flex flex-col shadow-soft">
+        <aside id="sidebar" class="sidebar-transition bg-white border-r border-gray-200 w-72 min-h-screen flex flex-col shadow-soft visible">
             <!-- Logo Section -->
             <div class="p-6 border-b border-gray-100">
                 <div class="flex items-center space-x-4">

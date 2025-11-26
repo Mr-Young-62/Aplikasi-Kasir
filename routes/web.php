@@ -8,6 +8,9 @@ use App\Http\Controllers\WaiterController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\MasakanController;
+use App\Http\Controllers\MejaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,10 +39,8 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
-// Admin Routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    
+// Admin Routes (resources)
+Route::middleware(['auth', 'check.role:Administrator'])->prefix('admin')->name('admin.')->group(function () {
     // Resource routes for master data
     Route::resource('users', UserController::class);
     Route::resource('masakans', MasakanController::class);
@@ -70,7 +71,7 @@ Route::middleware(['auth'])->prefix('kasir')->name('kasir.')->group(function () 
 });
 
 // Owner Routes
-Route::middleware(['auth'])->prefix('owner')->name('owner.')->group(function () {
+Route::middleware(['auth', 'check.role:Owner'])->prefix('owner')->name('owner.')->group(function () {
     Route::get('/dashboard', [OwnerController::class, 'dashboard'])->name('dashboard');
     Route::get('/laporan/penjualan', [OwnerController::class, 'laporanPenjualan'])->name('laporan.penjualan');
     Route::get('/laporan/masakan', [OwnerController::class, 'laporanMasakan'])->name('laporan.masakan');
@@ -78,8 +79,23 @@ Route::middleware(['auth'])->prefix('owner')->name('owner.')->group(function () 
     Route::get('/laporan/pelanggan', [OwnerController::class, 'laporanPelanggan'])->name('laporan.pelanggan');
 });
 
+// Admin Routes (Dashboard only - resources already defined above)
+Route::middleware(['auth', 'check.role:Administrator'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+});
+
+// Waiter Routes
+Route::middleware(['auth', 'check.role:Waiter'])->prefix('waiter')->name('waiter.')->group(function () {
+    Route::get('/dashboard', [WaiterController::class, 'dashboard'])->name('dashboard');
+});
+
+// Kasir Routes
+Route::middleware(['auth', 'check.role:Kasir'])->prefix('kasir')->name('kasir.')->group(function () {
+    Route::get('/dashboard', [KasirController::class, 'dashboard'])->name('dashboard');
+});
+
 // Pelanggan Routes
-Route::middleware(['auth'])->prefix('pelanggan')->name('pelanggan.')->group(function () {
+Route::middleware(['auth', 'check.role:Pelanggan'])->prefix('pelanggan')->name('pelanggan.')->group(function () {
     Route::get('/dashboard', [PelangganController::class, 'dashboard'])->name('dashboard');
     Route::get('/menu', [PelangganController::class, 'menu'])->name('menu');
     Route::get('/menu/kategori/{kategori}', [PelangganController::class, 'menuByCategory'])->name('menu.category');

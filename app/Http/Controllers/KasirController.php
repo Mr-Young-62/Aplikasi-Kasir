@@ -8,39 +8,63 @@ use App\Models\Order;
 use App\Models\Transaksi;
 use App\Models\DetailOrder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class KasirController extends Controller
 {
     public function dashboard()
     {
-        $readyOrders = Order::where('status_order', 'selesai')
-            ->with(['user', 'meja', 'detailOrders.masakan'])
-            ->whereDoesntHave('transaksi')
-            ->orderBy('tanggal', 'desc')
-            ->get();
+        try {
+            // Debug: Log method call
+            Log::info('KasirController::dashboard called for user: ' . auth()->id());
+            
+            $readyOrders = Order::where('status_order', 'selesai')
+                ->with(['user', 'meja', 'detailOrders.masakan'])
+                ->whereDoesntHave('transaksi')
+                ->orderBy('tanggal', 'desc')
+                ->get();
 
-        $myTransaksi = Transaksi::where('id_user', auth()->id())
-            ->with(['order.user', 'order.meja'])
-            ->orderBy('tanggal', 'desc')
-            ->take(10)
-            ->get();
+            $myTransaksi = Transaksi::where('id_user', auth()->id())
+                ->with(['order.user', 'order.meja'])
+                ->orderBy('tanggal', 'desc')
+                ->take(10)
+                ->get();
 
-        $todayTransaksi = Transaksi::whereDate('tanggal', today())
-            ->where('id_user', auth()->id())
-            ->berhasil()
-            ->sum('total_bayar');
+            $todayTransaksi = Transaksi::whereDate('tanggal', today())
+                ->where('id_user', auth()->id())
+                ->berhasil()
+                ->sum('total_bayar');
 
-        $todayCount = Transaksi::whereDate('tanggal', today())
-            ->where('id_user', auth()->id())
-            ->berhasil()
-            ->count();
+            $todayCount = Transaksi::whereDate('tanggal', today())
+                ->where('id_user', auth()->id())
+                ->berhasil()
+                ->count();
 
-        return view('kasir.dashboard', compact(
-            'readyOrders',
-            'myTransaksi',
-            'todayTransaksi',
-            'todayCount'
-        ));
+            // Debug: Log calculated values
+            Log::info('Kasir dashboard data calculated', [
+                'user_id' => auth()->id(),
+                'readyOrders_count' => $readyOrders->count(),
+                'myTransaksi_count' => $myTransaksi->count(),
+                'todayTransaksi' => $todayTransaksi,
+                'todayCount' => $todayCount
+            ]);
+
+            return view('kasir.dashboard', compact(
+                'readyOrders',
+                'myTransaksi',
+                'todayTransaksi',
+                'todayCount'
+            ));
+        } catch (\Exception $e) {
+            Log::error('KasirController::dashboard error: ' . $e->getMessage());
+            // Return with default values to prevent white screen
+            return view('kasir.dashboard', [
+                'readyOrders' => collect([]),
+                'myTransaksi' => collect([]),
+                'todayTransaksi' => 0,
+                'todayCount' => 0
+            ]);
+        }
     }
 
     public function createTransaksi($id_order)

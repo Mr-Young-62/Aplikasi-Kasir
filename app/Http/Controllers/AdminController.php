@@ -10,11 +10,18 @@ use App\Models\Transaksi;
 use App\Models\Masakan;
 use App\Models\Meja;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
+        // Debug quick-switch: /admin/dashboard?test=text -> plain text
+        if (request()->query('test') === 'text') {
+            return response('ADMIN DASHBOARD CONTROLLER OK', 200);
+        }
+
+        // Get REAL data from database
         $totalUsers = User::count();
         $totalOrders = Order::count();
         $totalTransaksi = Transaksi::where('status_transaksi', 'berhasil')->count();

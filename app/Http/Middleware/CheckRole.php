@@ -28,6 +28,11 @@ class CheckRole
             return redirect()->route('login')->with('error', 'Akun Anda tidak memiliki role yang valid.');
         }
 
+        // Administrator can access all dashboards
+        if ($user->hasRole('Administrator')) {
+            return $next($request);
+        }
+
         foreach ($roles as $role) {
             if ($user->hasRole($role)) {
                 return $next($request);

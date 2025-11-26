@@ -1,35 +1,135 @@
-<<<<<<< HEAD
-# Laravel + Livewire Starter Kit
+# UKK MUTU X PURWOSARI 🏫
 
-## Introduction
+![Project Banner](https://via.placeholder.com/1200x400/4F46E5/FFFFFF?text=UKK+MUTU+X+PURWOSARI)
+*Ganti banner di atas dengan gambar yang relevan dengan project Anda*
 
-Our Laravel + [Livewire](https://livewire.laravel.com) starter kit provides a robust, modern starting point for building Laravel applications with a Livewire frontend.
+## 📋 Tentang Project
 
-Livewire is a powerful way of building dynamic, reactive, frontend UIs using just PHP. It's a great fit for teams that primarily use Blade templates and are looking for a simpler alternative to JavaScript-driven SPA frameworks like React and Vue.
+Project **UKK MUTU X PURWOSARI** merupakan sistem informasi yang dikembangkan untuk memenuhi kebutuhan administrasi dan manajemen di lingkungan sekolah. Dibangun dengan teknologi modern untuk memberikan pengalaman pengguna yang optimal.
 
-This Livewire starter kit utilizes Livewire 3, Laravel Volt (optionally), TypeScript, Tailwind, and the [Flux UI](https://fluxui.dev) component library.
+### ✨ Fitur Utama
 
-If you are looking for the alternate configurations of this starter kit, they can be found in the following branches:
+- 🎯 **Dashboard Interaktif** - Monitoring data real-time
+- 📊 **Manajemen Data** - Kelola data siswa dan guru secara terpusat
+- 📝 **Laporan Otomatis** - Generate laporan dengan mudah
+- 🔐 **Sistem Keamanan** - Autentikasi multi-level
+- 📱 **Responsive Design** - Akses dari berbagai perangkat
 
-- [components](https://github.com/laravel/livewire-starter-kit/tree/components) - if Volt is not selected
-- [workos](https://github.com/laravel/livewire-starter-kit/tree/workos) - if WorkOS is selected for authentication
+## 🚀 Teknologi yang Digunakan
 
-## Official Documentation
+### Frontend
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-Documentation for all Laravel starter kits can be found on the [Laravel website](https://laravel.com/docs/starter-kits).
+### Backend
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
-## Contributing
+### Tools
+![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![XAMPP](https://img.shields.io/badge/XAMPP-FB7A24?style=for-the-badge&logo=xampp&logoColor=white)
 
-Thank you for considering contributing to our starter kit! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📦 Instalasi
 
-## Code of Conduct
+### Prasyarat
+Pastikan Anda telah menginstall:
+- PHP 7.4 atau lebih tinggi
+- MySQL 5.7 atau lebih tinggi
+- Web server (Apache/Nginx)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Langkah Instalasi
 
-## License
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/ukk-mutu-x-purwosari.git
+   cd ukk-mutu-x-purwosari
+   ```
 
-The Laravel + Livewire starter kit is open-sourced software licensed under the MIT license.
-=======
-# Aplikasi-Kasir
-Mutu x Purwosari
->>>>>>> 18f382bdef296fb01c7cdfd7078a846365553043
+2. **Setup Database**
+   ```sql
+   -- Import file database.sql ke MySQL
+   -- atau buat database manual
+   CREATE DATABASE ukk_mutu;
+   ```
+
+3. **Konfigurasi**
+   ```bash
+   # Salin file konfigurasi
+   cp config.example.php config.php
+   
+   # Edit konfigurasi database di config.php
+   nano config.php
+   ```
+
+4. **Jalankan Aplikasi**
+   ```bash
+   # Akses melalui browser
+   http://localhost/ukk-mutu-x-purwosari
+   ```
+
+## 🎯 Penggunaan
+
+### Untuk Admin
+1. Login dengan kredensial admin
+2. Akses dashboard untuk melihat statistik
+3. Kelola data siswa dan guru
+4. Generate laporan periodik
+
+### Untuk Guru
+1. Login dengan akun guru
+2. Input nilai siswa
+3. Lihat jadwal mengajar
+4. Akses data kelas
+
+### Untuk Siswa
+1. Login dengan NIS
+2. Lihat nilai dan rapor
+3. Cek jadwal pelajaran
+4. Akses materi pembelajaran
+
+## 📁 Struktur Project
+
+```
+ukk-mutu-x-purwosari/
+├── 📁 assets/          # File CSS, JS, Images
+├── 📁 config/          # Konfigurasi database
+├── 📁 admin/           # Panel administrator
+├── 📁 guru/            # Panel guru
+├── 📁 siswa/           # Panel siswa
+├── 📁 includes/        # File include PHP
+├── 📄 index.php        # Halaman utama
+├── 📄 login.php        # Halaman login
+└── 📄 README.md        # Dokumentasi
+```
+
+## 👥 Kontributor
+
+| Nama | Role | Kontak |
+|------|------|--------|
+| Tim Developer | Full Stack Developer | developer@example.com |
+| Tim Design | UI/UX Designer | designer@example.com |
+
+## 📞 Support
+
+Jika Anda mengalami kendala atau memiliki pertanyaan, silakan hubungi:
+
+- **Email**: support@mutuxpurwosari.sch.id
+- **Website**: www.mutuxpurwosari.sch.id
+- **Telepon**: (021) 1234-5678
+
+## 📄 Lisensi
+
+Project ini dilisensikan di bawah [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+### ⭐ Jangan lupa beri bintang pada repository ini!
+
+**Dikembangkan dengan ❤️ untuk pendidikan yang lebih baik**
+
+</div>

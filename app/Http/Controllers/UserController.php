@@ -12,8 +12,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('role:Administrator');
+        // Middleware will be handled by routes
     }
 
     /**
@@ -70,7 +69,7 @@ class UserController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        return redirect()->route('users.index')
+        return redirect()->route('admin.users.index')
             ->with('success', 'User berhasil dibuat!');
     }
 
@@ -118,7 +117,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users.index')
+        return redirect()->route('admin.users.index')
             ->with('success', 'User berhasil diperbarui!');
     }
 

@@ -89,7 +89,7 @@
                                     </div>
                                     <div>
                                         <p class="font-medium text-gray-900">Table {{ $order->no_meja }}</p>
-                                        <p class="text-sm text-gray-600">{{ $order->user->name }} • {{ $order->tanggal->format('H:i') }}</p>
+                                        <p class="text-sm text-gray-600">{{ $order->user?->name ?? 'N/A' }} • {{ $order->tanggal?->format('H:i') ?? '-' }}</p>
                                         <p class="text-sm font-medium text-green-700 mt-1">Rp. {{ number_format($order->total_harga, 0, ',', '.') }}</p>
                                     </div>
                                 </div>
@@ -147,8 +147,8 @@
                                         <span class="text-lg font-bold text-blue-600">#{{ $transaksi->id_transaksi }}</span>
                                     </div>
                                     <div>
-                                        <p class="font-medium text-gray-900">Order #{{ $transaksi->order->id_order }}</p>
-                                        <p class="text-sm text-gray-600">Table {{ $transaksi->order->no_meja }} • {{ $transaksi->tanggal->format('H:i') }}</p>
+                                        <p class="font-medium text-gray-900">Order #{{ $transaksi->order?->id_order ?? '-' }}</p>
+                                        <p class="text-sm text-gray-600">Table {{ $transaksi->order?->no_meja ?? '-' }} • {{ $transaksi->tanggal?->format('H:i') ?? '-' }}</p>
                                         <div class="flex items-center space-x-2 mt-1">
                                             <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full
                                                 {{ $transaksi->metode_pembayaran === 'cash' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">

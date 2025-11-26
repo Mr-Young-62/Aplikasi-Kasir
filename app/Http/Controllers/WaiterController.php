@@ -9,31 +9,59 @@ use App\Models\DetailOrder;
 use App\Models\Masakan;
 use App\Models\Meja;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class WaiterController extends Controller
 {
     public function dashboard()
     {
-        $myOrders = Order::where('id_user', auth()->id())
-            ->with(['meja', 'detailOrders.masakan'])
-            ->orderBy('tanggal', 'desc')
-            ->get();
+        try {
+            // Debug: Log method call
+            Log::info('WaiterController::dashboard called for user: ' . auth()->id());
+            
+            $myOrders = Order::where('id_user', auth()->id())
+                ->with(['meja', 'detailOrders.masakan'])
+                ->orderBy('tanggal', 'desc')
+                ->get();
 
-        $pendingOrders = $myOrders->where('status_order', 'menunggu')->count();
-        $processingOrders = $myOrders->where('status_order', 'diproses')->count();
-        $completedOrders = $myOrders->where('status_order', 'selesai')->count();
+            $pendingOrders = $myOrders->where('status_order', 'menunggu')->count();
+            $processingOrders = $myOrders->where('status_order', 'diproses')->count();
+            $completedOrders = $myOrders->where('status_order', 'selesai')->count();
 
-        $availableMeja = Meja::tersedia()->get();
-        $availableMasakan = Masakan::tersedia()->get();
+            $availableMeja = Meja::tersedia()->get();
+            $availableMasakan = Masakan::tersedia()->get();
 
-        return view('waiter.dashboard', compact(
-            'myOrders',
-            'pendingOrders',
-            'processingOrders', 
-            'completedOrders',
-            'availableMeja',
-            'availableMasakan'
-        ));
+            // Debug: Log calculated values
+            Log::info('Waiter dashboard data calculated', [
+                'user_id' => auth()->id(),
+                'myOrders_count' => $myOrders->count(),
+                'pendingOrders' => $pendingOrders,
+                'processingOrders' => $processingOrders,
+                'completedOrders' => $completedOrders,
+                'availableMeja_count' => $availableMeja->count(),
+                'availableMasakan_count' => $availableMasakan->count()
+            ]);
+
+            return view('waiter.dashboard', compact(
+                'myOrders',
+                'pendingOrders',
+                'processingOrders', 
+                'completedOrders',
+                'availableMeja',
+                'availableMasakan'
+            ));
+        } catch (\Exception $e) {
+            Log::error('WaiterController::dashboard error: ' . $e->getMessage());
+            // Return with default values to prevent white screen
+            return view('waiter.dashboard', [
+                'myOrders' => collect([]),
+                'pendingOrders' => 0,
+                'processingOrders' => 0,
+                'completedOrders' => 0,
+                'availableMeja' => collect([]),
+                'availableMasakan' => collect([])
+            ]);
+        }
     }
 
     public function createOrder()

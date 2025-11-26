@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('layouts.app')
 
 @section('title', 'Owner Dashboard')
@@ -17,16 +16,16 @@
         <!-- Total Revenue Card -->
         <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-medium">
+                <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-medium">
                     <i class="fas fa-dollar-sign text-white text-xl"></i>
                 </div>
-                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-green-600 text-xs"></i>
+                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-arrow-up text-success-600 text-xs"></i>
                 </div>
             </div>
             <h3 class="text-2xl font-bold text-gray-900 mb-1">Rp. {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}</h3>
             <p class="text-sm text-gray-500">Total Revenue</p>
-            <div class="mt-4 flex items-center text-xs text-green-600">
+            <div class="mt-4 flex items-center text-xs text-success-600">
                 <i class="fas fa-arrow-up mr-1"></i>
                 <span>12% from last month</span>
             </div>
@@ -35,16 +34,16 @@
         <!-- Today's Revenue Card -->
         <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-medium">
+                <div class="w-12 h-12 bg-gradient-to-br from-success-500 to-success-600 rounded-xl flex items-center justify-center shadow-medium">
                     <i class="fas fa-calendar-day text-white text-xl"></i>
                 </div>
-                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-green-600 text-xs"></i>
+                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-arrow-up text-success-600 text-xs"></i>
                 </div>
             </div>
             <h3 class="text-2xl font-bold text-gray-900 mb-1">Rp. {{ number_format($todayRevenue ?? 0, 0, ',', '.') }}</h3>
             <p class="text-sm text-gray-500">Today's Revenue</p>
-            <div class="mt-4 flex items-center text-xs text-green-600">
+            <div class="mt-4 flex items-center text-xs text-success-600">
                 <i class="fas fa-arrow-up mr-1"></i>
                 <span>8% from yesterday</span>
             </div>
@@ -53,16 +52,16 @@
         <!-- Total Orders Card -->
         <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-medium">
+                <div class="w-12 h-12 bg-gradient-to-br from-warning-500 to-warning-600 rounded-xl flex items-center justify-center shadow-medium">
                     <i class="fas fa-shopping-bag text-white text-xl"></i>
                 </div>
-                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-down text-yellow-600 text-xs"></i>
+                <div class="w-8 h-8 bg-warning-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-arrow-down text-warning-600 text-xs"></i>
                 </div>
             </div>
             <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $totalOrders ?? 0 }}</h3>
             <p class="text-sm text-gray-500">Total Orders</p>
-            <div class="mt-4 flex items-center text-xs text-yellow-600">
+            <div class="mt-4 flex items-center text-xs text-warning-600">
                 <i class="fas fa-arrow-down mr-1"></i>
                 <span>3% from last week</span>
             </div>
@@ -71,16 +70,16 @@
         <!-- Transactions Card -->
         <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-medium">
+                <div class="w-12 h-12 bg-gradient-to-br from-danger-500 to-danger-600 rounded-xl flex items-center justify-center shadow-medium">
                     <i class="fas fa-credit-card text-white text-xl"></i>
                 </div>
-                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-green-600 text-xs"></i>
+                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-arrow-up text-success-600 text-xs"></i>
                 </div>
             </div>
             <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $totalTransactions ?? 0 }}</h3>
             <p class="text-sm text-gray-500">Transactions</p>
-            <div class="mt-4 flex items-center text-xs text-green-600">
+            <div class="mt-4 flex items-center text-xs text-success-600">
                 <i class="fas fa-arrow-up mr-1"></i>
                 <span>15% success rate</span>
             </div>
@@ -94,7 +93,7 @@
             <div class="p-6 border-b border-gray-100">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-gray-900">Revenue Trend</h3>
-                    <select class="text-sm border border-gray-200 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select class="text-sm border border-gray-200 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500">
                         <option>Last 7 days</option>
                         <option>Last 30 days</option>
                         <option>Last 3 months</option>
@@ -114,8 +113,8 @@
             <div class="p-6 space-y-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-users text-blue-600 text-sm"></i>
+                        <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-primary-600 text-sm"></i>
                         </div>
                         <span class="text-sm text-gray-600">Customers</span>
                     </div>
@@ -124,8 +123,8 @@
                 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-utensils text-green-600 text-sm"></i>
+                        <div class="w-8 h-8 bg-success-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-utensils text-success-600 text-sm"></i>
                         </div>
                         <span class="text-sm text-gray-600">Menu Items</span>
                     </div>
@@ -134,8 +133,8 @@
                 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-chair text-yellow-600 text-sm"></i>
+                        <div class="w-8 h-8 bg-warning-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chair text-warning-600 text-sm"></i>
                         </div>
                         <span class="text-sm text-gray-600">Tables</span>
                     </div>
@@ -144,8 +143,8 @@
                 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-user-tie text-red-600 text-sm"></i>
+                        <div class="w-8 h-8 bg-danger-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user-tie text-danger-600 text-sm"></i>
                         </div>
                         <span class="text-sm text-gray-600">Staff</span>
                     </div>
@@ -160,7 +159,7 @@
         <div class="p-6 border-b border-gray-100">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-gray-900">Recent Transactions</h3>
-                <a href="{{ route('owner.laporan.penjualan') }}" class="text-sm text-blue-600 hover:text-blue-700 font-medium">View All</a>
+                <button class="text-sm text-primary-600 hover:text-primary-700 font-medium">View All</button>
             </div>
         </div>
         <div class="p-6">
@@ -184,22 +183,22 @@
                                         <span class="text-sm font-medium text-gray-900">#{{ $transaksi->id_transaksi }}</span>
                                     </td>
                                     <td class="py-3">
-                                        <span class="text-sm text-gray-600">Order #{{ $transaksi->order->id_order ?? 'N/A' }}</span>
+                                        <span class="text-sm text-gray-600">Order #{{ $transaksi->order->id_order }}</span>
                                     </td>
                                     <td class="py-3">
-                                        <span class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($transaksi->tanggal)->format('d M Y, H:i') }}</span>
+                                        <span class="text-sm text-gray-600">{{ $transaksi->tanggal->format('d M Y, H:i') }}</span>
                                     </td>
                                     <td class="py-3">
                                         <span class="text-sm font-semibold text-gray-900">Rp. {{ number_format($transaksi->total_bayar, 0, ',', '.') }}</span>
                                     </td>
                                     <td class="py-3">
                                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                                            {{ $transaksi->metode_pembayaran === 'cash' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
-                                            {{ ucfirst($transaksi->metode_pembayaran ?? 'unknown') }}
+                                            {{ $transaksi->metode_pembayaran === 'cash' ? 'bg-success-100 text-success-800' : 'bg-primary-100 text-primary-800' }}">
+                                            {{ ucfirst($transaksi->metode_pembayaran) }}
                                         </span>
                                     </td>
                                     <td class="py-3">
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success-100 text-success-800">
                                             <i class="fas fa-check-circle mr-1"></i>
                                             Success
                                         </span>
@@ -307,5 +306,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endsection
-=======
->>>>>>> 059baa7e6da687df06c85de8b46ecbafc586c968
