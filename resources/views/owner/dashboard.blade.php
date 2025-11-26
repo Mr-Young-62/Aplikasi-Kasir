@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @extends('layouts.app')
 
 @section('title', 'Owner Dashboard')
@@ -306,3 +307,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endsection
+=======
+>>>>>>> 059baa7e6da687df06c85de8b46ecbafc586c968
