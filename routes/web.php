@@ -72,7 +72,6 @@ Route::middleware(['auth'])->prefix('kasir')->name('kasir.')->group(function () 
 // Owner Routes
 Route::middleware(['auth'])->prefix('owner')->name('owner.')->group(function () {
     Route::get('/dashboard', [OwnerController::class, 'dashboard'])->name('dashboard');
-    Route::get('/debug', [OwnerController::class, 'debug'])->name('debug');
     Route::get('/laporan/penjualan', [OwnerController::class, 'laporanPenjualan'])->name('laporan.penjualan');
     Route::get('/laporan/masakan', [OwnerController::class, 'laporanMasakan'])->name('laporan.masakan');
     Route::get('/laporan/waiter', [OwnerController::class, 'laporanWaiter'])->name('laporan.waiter');

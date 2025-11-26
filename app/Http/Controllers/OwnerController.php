@@ -13,33 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class OwnerController extends Controller
 {
-    public function debug()
-    {
-        $data = [
-            'totalRevenue' => Transaksi::berhasil()->sum('total_bayar'),
-            'totalOrders' => Order::count(),
-            'totalTransactions' => Transaksi::berhasil()->count(),
-            'totalCustomers' => User::whereHas('level', function($q) {
-                $q->where('nama_level', 'Pelanggan');
-            })->count(),
-            'todayRevenue' => Transaksi::whereDate('tanggal', today())->berhasil()->sum('total_bayar'),
-            'todayOrders' => Order::whereDate('tanggal', today())->count(),
-            'todayTransactions' => Transaksi::whereDate('tanggal', today())->berhasil()->count(),
-            'thisMonthRevenue' => Transaksi::whereMonth('tanggal', now()->month)
-                ->whereYear('tanggal', now()->year)
-                ->berhasil()->sum('total_bayar'),
-            'thisMonthOrders' => Order::whereMonth('tanggal', now()->month)
-                ->whereYear('tanggal', now()->year)
-                ->count(),
-            'allUsers' => User::all()->pluck('name', 'email'),
-            'allMasakans' => Masakan::all()->pluck('nama_masakan', 'harga'),
-            'allOrders' => Order::all()->pluck('id_order', 'total_harga'),
-            'allTransactions' => Transaksi::all()->pluck('id_transaksi', 'total_bayar'),
-        ];
-        
-        return response()->json($data);
-    }
-
     public function dashboard()
     {
         // Total statistics
@@ -91,14 +64,14 @@ class OwnerController extends Controller
 
         // Monthly revenue for chart (last 6 months)
         $monthlyRevenue = Transaksi::berhasil()
-            ->select(DB::raw('strftime("%m", tanggal) as month'), DB::raw('strftime("%Y", tanggal) as year'), DB::raw('SUM(total_bayar) as revenue'))
+            ->select(DB::raw('MONTH(tanggal) as month'), DB::raw('YEAR(tanggal) as year'), DB::raw('SUM(total_bayar) as revenue'))
             ->where('tanggal', '>=', now()->subMonths(5))
-            ->groupBy(DB::raw('strftime("%Y", tanggal)'), DB::raw('strftime("%m", tanggal)'))
+            ->groupBy(DB::raw('YEAR(tanggal)'), DB::raw('MONTH(tanggal)'))
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
             ->get();
 
-        return view('owner.dashboard_simple', compact(
+        return view('owner.dashboard', compact(
             'totalRevenue', 'totalOrders', 'totalTransactions', 'totalCustomers',
             'todayRevenue', 'todayOrders', 'todayTransactions',
             'thisMonthRevenue', 'thisMonthOrders',

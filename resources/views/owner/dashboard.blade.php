@@ -5,21 +5,6 @@
 
 @section('content')
 <div class="animate-fade-in">
-    <!-- Debug Info -->
-    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-        <h3 class="text-sm font-semibold text-yellow-800 mb-2">Debug Information:</h3>
-        <div class="text-xs text-yellow-700 space-y-1">
-            <p>Total Revenue: {{ $totalRevenue ?? 'NULL' }}</p>
-            <p>Today Revenue: {{ $todayRevenue ?? 'NULL' }}</p>
-            <p>Total Orders: {{ $totalOrders ?? 'NULL' }}</p>
-            <p>Total Transactions: {{ $totalTransactions ?? 'NULL' }}</p>
-            <p>Total Customers: {{ $totalCustomers ?? 'NULL' }}</p>
-            <p>Top Masakan Count: {{ isset($topMasakan) ? $topMasakan->count() : 'NULL' }}</p>
-            <p>Waiter Performance Count: {{ isset($waiterPerformance) ? $waiterPerformance->count() : 'NULL' }}</p>
-            <p>Recent Transactions Count: {{ isset($recentTransactions) ? $recentTransactions->count() : 'NULL' }}</p>
-            <p>Monthly Revenue Count: {{ isset($monthlyRevenue) ? $monthlyRevenue->count() : 'NULL' }}</p>
-        </div>
-    </div>
     <!-- Welcome Section -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
@@ -239,10 +224,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('revenueChart');
-    if (ctx) {
-        // Sample data for the chart
-        const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const data = [1200000, 1900000, 1500000, 2500000, 2200000, 3000000, 2800000];
+    if (ctx && {{ isset($monthlyRevenue) && $monthlyRevenue->count() > 0 ? 'true' : 'false' }}) {
+        // Use real monthly revenue data
+        const labels = @json(isset($monthlyRevenue) ? $monthlyRevenue->map(function($item) {
+            return \Carbon\Carbon::createFromDate($item->year, $item->month, 1)->format('M Y');
+        }) : []);
+        const data = @json(isset($monthlyRevenue) ? $monthlyRevenue->pluck('revenue') : []);
 
         new Chart(ctx, {
             type: 'line',

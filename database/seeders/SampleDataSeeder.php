@@ -16,8 +16,8 @@ class SampleDataSeeder extends Seeder
 {
     public function run()
     {
-        // Disable foreign key checks
-        DB::statement('PRAGMA foreign_keys = OFF');
+        // Disable foreign key checks for MySQL
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         
         // Clear existing data
         Order::query()->delete();
@@ -95,8 +95,8 @@ class SampleDataSeeder extends Seeder
             }
         }
         
-        // Re-enable foreign key checks
-        DB::statement('PRAGMA foreign_keys = ON');
+        // Re-enable foreign key checks for MySQL
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         
         echo "Sample orders and transactions created successfully!\n";
         echo "Orders: " . Order::count() . "\n";
