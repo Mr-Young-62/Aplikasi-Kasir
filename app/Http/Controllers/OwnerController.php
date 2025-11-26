@@ -13,21 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class OwnerController extends Controller
 {
-    public function test()
-    {
-        // Get same data as dashboard
-        $totalRevenue = Transaksi::berhasil()->sum('total_bayar');
-        $totalOrders = Order::count();
-        $totalTransactions = Transaksi::berhasil()->count();
-        $totalCustomers = User::whereHas('level', function($q) {
-            $q->where('nama_level', 'Pelanggan');
-        })->count();
-
-        return view('owner.test', compact(
-            'totalRevenue', 'totalOrders', 'totalTransactions', 'totalCustomers'
-        ));
-    }
-
     public function dashboard()
     {
         // Total statistics
