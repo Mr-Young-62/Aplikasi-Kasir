@@ -45,6 +45,13 @@ Route::middleware(['auth', 'check.role:Administrator'])->prefix('admin')->name('
     Route::resource('users', UserController::class);
     Route::resource('masakans', MasakanController::class);
     Route::resource('mejas', MejaController::class);
+    
+    // Additional masakan routes
+    Route::patch('masakans/{masakan}/toggle-status', [MasakanController::class, 'toggleStatus'])->name('masakans.toggle-status');
+    
+    // Additional meja routes
+    Route::patch('mejas/{meja}/toggle-status', [MejaController::class, 'toggleStatus'])->name('mejas.toggle-status');
+    Route::get('mejas/{meja}/download-qr', [MejaController::class, 'downloadQR'])->name('mejas.download-qr');
 });
 
 // Waiter Routes

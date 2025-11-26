@@ -75,7 +75,7 @@ class WaiterController extends Controller
     public function storeOrder(Request $request)
     {
         $request->validate([
-            'no_meja' => 'required|exists:mejas,no_meja',
+            'nomor_meja' => 'required|exists:mejas,nomor_meja',
             'keterangan' => 'nullable|string',
             'items' => 'required|array',
             'items.*.id_masakan' => 'required|exists:masakans,id_masakan',
@@ -85,13 +85,13 @@ class WaiterController extends Controller
         DB::beginTransaction();
         try {
             // Update meja status
-            $meja = Meja::where('no_meja', $request->no_meja)->first();
+            $meja = Meja::where('nomor_meja', $request->nomor_meja)->first();
             $meja->update(['status_meja' => 'terisi']);
 
             // Create order
             $order = Order::create([
-                'no_meja' => $request->no_meja,
-                'tanggal' => today(),
+                'id_meja' => $meja->id_meja,
+                'tanggal' => now(),
                 'id_user' => auth()->id(),
                 'keterangan' => $request->keterangan,
                 'status_order' => 'menunggu',
@@ -155,7 +155,7 @@ class WaiterController extends Controller
 
         // Update meja status if order is completed
         if ($request->status_order === 'selesai') {
-            $order->meja->update(['status_meja' => 'kosong']);
+            $order->meja->update(['status_meja' => 'tersedia']);
         }
 
         return redirect()->route('waiter.dashboard')
