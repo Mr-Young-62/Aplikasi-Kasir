@@ -95,7 +95,7 @@ class PelangganController extends Controller
     public function storeSelfOrder(Request $request)
     {
         $request->validate([
-            'no_meja' => 'required|exists:mejas,no_meja',
+            'nomor_meja' => 'required|exists:mejas,nomor_meja',
             'keterangan' => 'nullable|string',
             'items' => 'required|array',
             'items.*.id_masakan' => 'required|exists:masakans,id_masakan',
@@ -105,13 +105,13 @@ class PelangganController extends Controller
         DB::beginTransaction();
         try {
             // Update meja status
-            $meja = Meja::where('no_meja', $request->no_meja)->first();
+            $meja = Meja::where('nomor_meja', $request->nomor_meja)->first();
             $meja->update(['status_meja' => 'dipesan']);
 
             // Create order
             $order = Order::create([
-                'no_meja' => $request->no_meja,
-                'tanggal' => today(),
+                'no_meja' => $meja->nomor_meja,
+                'tanggal' => now(),
                 'id_user' => auth()->id(),
                 'keterangan' => $request->keterangan . ' (Self-Order)',
                 'status_order' => 'menunggu',
@@ -173,7 +173,7 @@ class PelangganController extends Controller
         DB::beginTransaction();
         try {
             // Update meja status
-            $order->meja->update(['status_meja' => 'kosong']);
+            $order->meja->update(['status_meja' => 'tersedia']);
             
             // Update order status
             $order->update(['status_order' => 'dibatal']);

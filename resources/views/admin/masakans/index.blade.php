@@ -68,8 +68,8 @@
                     @forelse($masakans as $masakan)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if($masakan->gambar)
-                                    <img src="{{ asset('storage/' . $masakan->gambar) }}" 
+                                @if($masakan->foto)
+                                    <img src="{{ asset('storage/' . $masakan->foto) }}" 
                                          alt="{{ $masakan->nama_masakan }}" 
                                          class="w-16 h-16 rounded-lg object-cover">
                                 @else

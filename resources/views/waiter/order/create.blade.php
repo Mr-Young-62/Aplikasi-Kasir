@@ -37,7 +37,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('no_meja')
+                    @error('nomor_meja')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

@@ -4,337 +4,217 @@
 @section('header', 'Laporan Masakan')
 
 @section('content')
-<div class="animate-fade-in">
-    <!-- Header Section -->
+<div class="container mx-auto px-4 py-6">
+    <!-- Header -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-2">Laporan Masakan</h1>
         <p class="text-gray-600">Analisis penjualan menu dan performa masakan</p>
     </div>
 
     <!-- Filter Section -->
-    <div class="bg-white rounded-2xl shadow-soft border border-gray-100 p-6 mb-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <form method="GET" action="{{ route('owner.laporan.masakan') }}" class="flex flex-col lg:flex-row gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Dari Tanggal</label>
-                <input type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500" value="{{ now()->startOfMonth()->format('Y-m-d') }}">
+                <input type="date" name="start" value="{{ $start }}" 
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Sampai Tanggal</label>
-                <input type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500" value="{{ now()->format('Y-m-d') }}">
+                <input type="date" name="end" value="{{ $end }}" 
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Kategori</label>
-                <select class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    <option>Semua Kategori</option>
-                    <option>Makanan</option>
-                    <option>Minuman</option>
-                    <option>Dessert</option>
-                </select>
-            </div>
-            <div class="flex items-end">
-                <button class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors btn-hover">
-                    <i class="fas fa-filter mr-2"></i>
-                    Filter
+            <div class="flex items-end space-x-3">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <i class="fas fa-filter mr-2"></i>Filter
                 </button>
+                <a href="{{ route('owner.laporan.masakan') }}" 
+                   class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                    <i class="fas fa-times mr-2"></i>Reset
+                </a>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Stats Overview -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-medium">
-                    <i class="fas fa-utensils text-white text-xl"></i>
-                </div>
-                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-success-600 text-xs"></i>
+                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-utensils text-orange-600 text-xl"></i>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-1">8</h3>
-            <p class="text-sm text-gray-500">Total Menu</p>
-            <div class="mt-4 flex items-center text-xs text-success-600">
-                <i class="fas fa-arrow-up mr-1"></i>
-                <span>2 menu baru</span>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $masakanStats->count() }}</h3>
+            <p class="text-sm text-gray-500">Total Menu Terjual</p>
+            <div class="mt-4">
+                <span class="text-xs text-gray-600">Periode: {{ $start }} - {{ $end }}</span>
             </div>
         </div>
 
-        <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-success-500 to-success-600 rounded-xl flex items-center justify-center shadow-medium">
-                    <i class="fas fa-shopping-bag text-white text-xl"></i>
-                </div>
-                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-success-600 text-xs"></i>
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-shopping-bag text-green-600 text-xl"></i>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-1">245</h3>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">{{ $totalSold }}</h3>
             <p class="text-sm text-gray-500">Total Terjual</p>
-            <div class="mt-4 flex items-center text-xs text-success-600">
-                <i class="fas fa-arrow-up mr-1"></i>
-                <span>12% kemarin</span>
+            <div class="mt-4">
+                <span class="text-xs text-gray-600">Semua menu</span>
             </div>
         </div>
 
-        <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-warning-500 to-warning-600 rounded-xl flex items-center justify-center shadow-medium">
-                    <i class="fas fa-star text-white text-xl"></i>
-                </div>
-                <div class="w-8 h-8 bg-warning-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-warning-600 text-xs"></i>
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-dollar-sign text-blue-600 text-xl"></i>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-1">4.8</h3>
-            <p class="text-sm text-gray-500">Rating Rata-rata</p>
-            <div class="mt-4 flex items-center text-xs text-warning-600">
-                <i class="fas fa-arrow-up mr-1"></i>
-                <span>Excellent</span>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
+            <p class="text-sm text-gray-500">Total Revenue</p>
+            <div class="mt-4">
+                <span class="text-xs text-gray-600">Dari penjualan menu</span>
             </div>
         </div>
 
-        <div class="card-hover bg-white rounded-2xl shadow-soft p-6 border border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-danger-500 to-danger-600 rounded-xl flex items-center justify-center shadow-medium">
-                    <i class="fas fa-fire text-white text-xl"></i>
-                </div>
-                <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-arrow-up text-success-600 text-xs"></i>
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-chart-line text-purple-600 text-xl"></i>
                 </div>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-1">Nasi Goreng</h3>
-            <p class="text-sm text-gray-500">Menu Terlaris</p>
-            <div class="mt-4 flex items-center text-xs text-success-600">
-                <i class="fas fa-arrow-up mr-1"></i>
-                <span>45 terjual</span>
+            <h3 class="text-2xl font-bold text-gray-900 mb-1">Rp. {{ number_format($totalSold > 0 ? $totalRevenue / $totalSold : 0, 0, ',', '.') }}</h3>
+            <p class="text-sm text-gray-500">Rata-rata Harga</p>
+            <div class="mt-4">
+                <span class="text-xs text-gray-600">Per item terjual</span>
             </div>
         </div>
     </div>
 
-    <!-- Top Selling Items -->
+    <!-- Top Selling Items & Category Distribution -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <!-- Top Items Chart -->
-        <div class="bg-white rounded-2xl shadow-soft border border-gray-100">
-            <div class="p-6 border-b border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-gray-900">Top 5 Menu Terlaris</h3>
+                <button onclick="exportChart('topItems')" class="text-sm text-blue-600 hover:text-blue-700">
+                    <i class="fas fa-download mr-1"></i>Export
+                </button>
             </div>
-            <div class="p-6">
-                <canvas id="topItemsChart" width="400" height="200"></canvas>
+            <div class="h-80">
+                <canvas id="topItemsChart"></canvas>
             </div>
         </div>
 
         <!-- Category Distribution -->
-        <div class="bg-white rounded-2xl shadow-soft border border-gray-100">
-            <div class="p-6 border-b border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-gray-900">Distribusi Kategori</h3>
+                <button onclick="exportChart('category')" class="text-sm text-blue-600 hover:text-blue-700">
+                    <i class="fas fa-download mr-1"></i>Export
+                </button>
             </div>
-            <div class="p-6">
-                <canvas id="categoryChart" width="400" height="200"></canvas>
+            <div class="h-80">
+                <canvas id="categoryChart"></canvas>
             </div>
         </div>
     </div>
 
     <!-- Menu Performance Table -->
-    <div class="bg-white rounded-2xl shadow-soft border border-gray-100">
-        <div class="p-6 border-b border-gray-100">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-gray-900">Performa Menu</h3>
                 <div class="flex space-x-2">
-                    <button class="text-sm text-primary-600 hover:text-primary-700 font-medium">
-                        <i class="fas fa-download mr-1"></i>
-                        Export
+                    <button onclick="exportTable()" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                        <i class="fas fa-download mr-1"></i>Export
                     </button>
-                    <button class="text-sm text-primary-600 hover:text-primary-700 font-medium">
-                        <i class="fas fa-print mr-1"></i>
-                        Print
+                    <button onclick="printTable()" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                        <i class="fas fa-print mr-1"></i>Print
                     </button>
                 </div>
             </div>
         </div>
-        <div class="p-6">
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            <th class="pb-3">Nama Masakan</th>
-                            <th class="pb-3">Kategori</th>
-                            <th class="pb-3">Harga</th>
-                            <th class="pb-3">Terjual</th>
-                            <th class="pb-3">Total Revenue</th>
-                            <th class="pb-3">Rating</th>
-                            <th class="pb-3">Status</th>
-                            <th class="pb-3">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="py-4">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Masakan</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Terjual</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total Revenue</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Total Order</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Rata-rata/Order</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Performa</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @forelse($masakanStats as $index => $stat)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-drumstick-bite text-orange-600"></i>
+                                        <i class="fas fa-utensils text-orange-600"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-medium text-gray-900">Nasi Goreng</p>
-                                        <p class="text-xs text-gray-500">Favorit</p>
+                                        <p class="text-sm font-medium text-gray-900">{{ $stat->nama_masakan }}</p>
+                                        @if($index === 0)
+                                            <p class="text-xs text-green-600">Terlaris</p>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
-                            <td class="py-4">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                                    Makanan
+                            <td class="px-6 py-4">
+                                <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full
+                                    @switch($stat->kategori)
+                                        @case('makanan')
+                                            bg-orange-100 text-orange-800
+                                            @break
+                                        @case('minuman')
+                                            bg-blue-100 text-blue-800
+                                            @break
+                                        @case('dessert')
+                                            bg-pink-100 text-pink-800
+                                            @break
+                                        @default
+                                            bg-gray-100 text-gray-800
+                                    @endswitch">
+                                    {{ ucfirst($stat->kategori) }}
                                 </span>
                             </td>
-                            <td class="py-4">
-                                <span class="text-sm font-semibold text-gray-900">Rp. 25.000</span>
+                            <td class="px-6 py-4 text-center">
+                                <span class="text-sm font-semibold text-gray-900">{{ $stat->total_terjual }}</span>
                             </td>
-                            <td class="py-4">
-                                <span class="text-sm text-gray-600">45</span>
+                            <td class="px-6 py-4 text-right">
+                                <span class="text-sm font-semibold text-gray-900">Rp. {{ number_format($stat->total_pendapatan, 0, ',', '.') }}</span>
                             </td>
-                            <td class="py-4">
-                                <span class="text-sm font-semibold text-gray-900">Rp. {{ number_format(1125000, 0, ',', '.') }}</span>
+                            <td class="px-6 py-4 text-center">
+                                <span class="text-sm text-gray-900">{{ $stat->total_order }}</span>
                             </td>
-                            <td class="py-4">
-                                <div class="flex items-center space-x-1">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star-half-alt text-xs"></i>
+                            <td class="px-6 py-4 text-right">
+                                <span class="text-sm text-gray-900">Rp. {{ number_format($stat->total_order > 0 ? $stat->total_pendapatan / $stat->total_order : 0, 0, ',', '.') }}</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-20 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: {{ min(100, ($stat->total_terjual / $totalSold) * 100) }}%"></div>
                                     </div>
-                                    <span class="text-xs text-gray-500">4.5</span>
-                                </div>
-                            </td>
-                            <td class="py-4">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success-100 text-success-800">
-                                    <i class="fas fa-check-circle mr-1"></i>
-                                    Tersedia
-                                </span>
-                            </td>
-                            <td class="py-4">
-                                <div class="flex space-x-2">
-                                    <button class="text-primary-600 hover:text-primary-700 text-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-gray-600 hover:text-gray-700 text-sm">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </button>
+                                    <span class="text-xs text-gray-600">{{ round(($stat->total_terjual / $totalSold) * 100, 1) }}%</span>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-coffee text-blue-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Es Teh Manis</p>
-                                        <p class="text-xs text-gray-500">Best Seller</p>
-                                    </div>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-6 py-12 text-center">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-utensils text-gray-400 text-2xl"></i>
                                 </div>
-                            </td>
-                            <td class="py-4">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    Minuman
-                                </span>
-                            </td>
-                            <td class="py-4">
-                                <span class="text-sm font-semibold text-gray-900">Rp. 8.000</span>
-                            </td>
-                            <td class="py-4">
-                                <span class="text-sm text-gray-600">38</span>
-                            </td>
-                            <td class="py-4">
-                                <span class="text-sm font-semibold text-gray-900">Rp. {{ number_format(304000, 0, ',', '.') }}</span>
-                            </td>
-                            <td class="py-4">
-                                <div class="flex items-center space-x-1">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                    </div>
-                                    <span class="text-xs text-gray-500">5.0</span>
-                                </div>
-                            </td>
-                            <td class="py-4">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success-100 text-success-800">
-                                    <i class="fas fa-check-circle mr-1"></i>
-                                    Tersedia
-                                </span>
-                            </td>
-                            <td class="py-4">
-                                <div class="flex space-x-2">
-                                    <button class="text-primary-600 hover:text-primary-700 text-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-gray-600 hover:text-gray-700 text-sm">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </button>
-                                </div>
+                                <p class="text-gray-500">Tidak ada data penjualan menu dalam periode ini</p>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-ice-cream text-pink-600"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Es Krim Vanilla</p>
-                                        <p class="text-xs text-gray-500">Dessert</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="py-4">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
-                                    Dessert
-                                </span>
-                            </td>
-                            <td class="py-4">
-                                <span class="text-sm font-semibold text-gray-900">Rp. 15.000</span>
-                            </td>
-                            <td class="py-4">
-                                <span class="text-sm text-gray-600">22</span>
-                            </td>
-                            <td class="py-4">
-                                <span class="text-sm font-semibold text-gray-900">Rp. {{ number_format(330000, 0, ',', '.') }}</span>
-                            </td>
-                            <td class="py-4">
-                                <div class="flex items-center space-x-1">
-                                    <div class="flex text-yellow-400">
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="fas fa-star text-xs"></i>
-                                        <i class="far fa-star text-xs"></i>
-                                    </div>
-                                    <span class="text-xs text-gray-500">4.0</span>
-                                </div>
-                            </td>
-                            <td class="py-4">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-warning-100 text-warning-800">
-                                    <i class="fas fa-clock mr-1"></i>
-                                    Habis
-                                </span>
-                            </td>
-                            <td class="py-4">
-                                <div class="flex space-x-2">
-                                    <button class="text-primary-600 hover:text-primary-700 text-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-gray-600 hover:text-gray-700 text-sm">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -344,13 +224,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Top Items Chart
     const topItemsCtx = document.getElementById('topItemsChart');
     if (topItemsCtx) {
+        const masakanStats = @json($masakanStats->take(5));
+        const labels = masakanStats.map(item => item.nama_masakan);
+        const data = masakanStats.map(item => item.total_terjual);
+
         new Chart(topItemsCtx, {
             type: 'bar',
             data: {
-                labels: ['Nasi Goreng', 'Es Teh Manis', 'Mie Ayam', 'Ayam Bakar', 'Es Krim'],
+                labels: labels,
                 datasets: [{
                     label: 'Terjual',
-                    data: [45, 38, 32, 28, 22],
+                    data: data,
                     backgroundColor: [
                         'rgba(251, 146, 60, 0.8)',
                         'rgba(59, 130, 246, 0.8)',
@@ -368,6 +252,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Terjual: ' + context.parsed.y + ' items';
+                            }
+                        }
                     }
                 },
                 scales: {
@@ -391,16 +282,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Category Chart
     const categoryCtx = document.getElementById('categoryChart');
     if (categoryCtx) {
+        const masakanStats = @json($masakanStats);
+        const categoryData = {};
+        
+        masakanStats.forEach(item => {
+            if (!categoryData[item.kategori]) {
+                categoryData[item.kategori] = 0;
+            }
+            categoryData[item.kategori] += item.total_terjual;
+        });
+
+        const labels = Object.keys(categoryData);
+        const data = Object.values(categoryData);
+
         new Chart(categoryCtx, {
             type: 'doughnut',
             data: {
-                labels: ['Makanan', 'Minuman', 'Dessert'],
+                labels: labels.map(label => ucfirst(label)),
                 datasets: [{
-                    data: [65, 25, 10],
+                    data: data,
                     backgroundColor: [
                         'rgba(251, 146, 60, 0.8)',
                         'rgba(59, 130, 246, 0.8)',
-                        'rgba(236, 72, 153, 0.8)'
+                        'rgba(236, 72, 153, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(168, 85, 247, 0.8)'
                     ],
                     borderWidth: 0,
                 }]
@@ -417,11 +323,35 @@ document.addEventListener('DOMContentLoaded', function() {
                                 size: 12
                             }
                         }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                            }
+                        }
                     }
                 }
             }
         });
     }
 });
+
+function exportChart(type) {
+    // Export chart functionality
+    alert('Export ' + type + ' chart functionality would be implemented here');
+}
+
+function exportTable() {
+    // Export table functionality
+    window.open('{{ route('owner.laporan.masakan') }}?export=excel&start={{ $start }}&end={{ $end }}', '_blank');
+}
+
+function printTable() {
+    // Print functionality
+    window.print();
+}
 </script>
 @endsection

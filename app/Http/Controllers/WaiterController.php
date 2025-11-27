@@ -90,7 +90,7 @@ class WaiterController extends Controller
 
             // Create order
             $order = Order::create([
-                'id_meja' => $meja->id_meja,
+                'no_meja' => $meja->nomor_meja,
                 'tanggal' => now(),
                 'id_user' => auth()->id(),
                 'keterangan' => $request->keterangan,

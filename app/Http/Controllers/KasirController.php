@@ -30,12 +30,12 @@ class KasirController extends Controller
                 ->take(10)
                 ->get();
 
-            $todayTransaksi = Transaksi::whereDate('tanggal', today())
+            $todayTransaksi = Transaksi::whereDate('tanggal', now()->toDateString())
                 ->where('id_user', auth()->id())
                 ->berhasil()
                 ->sum('total_bayar');
 
-            $todayCount = Transaksi::whereDate('tanggal', today())
+            $todayCount = Transaksi::whereDate('tanggal', now()->toDateString())
                 ->where('id_user', auth()->id())
                 ->berhasil()
                 ->count();
@@ -102,7 +102,7 @@ class KasirController extends Controller
             $transaksi = Transaksi::create([
                 'id_user' => auth()->id(),
                 'id_order' => $order->id_order,
-                'tanggal' => today(),
+                'tanggal' => now(),
                 'total_bayar' => $total_bayar,
                 'uang_bayar' => $request->uang_bayar,
                 'kembalian' => $request->uang_bayar - $total_bayar,

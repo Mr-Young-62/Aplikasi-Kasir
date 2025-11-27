@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600 mb-1">Total Meja</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $mejas->total() }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $mejas->count() }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <i class="fas fa-chair text-blue-600"></i>

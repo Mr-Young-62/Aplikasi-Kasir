@@ -31,7 +31,7 @@ class Order extends Model
 
     public function meja()
     {
-        return $this->belongsTo(Meja::class, 'no_meja', 'no_meja');
+        return $this->belongsTo(Meja::class, 'no_meja', 'nomor_meja');
     }
 
     public function detailOrders()

@@ -128,7 +128,7 @@
                                         <span class="text-sm font-medium text-gray-900">#{{ $order->id_order }}</span>
                                     </td>
                                     <td class="py-3">
-                                        <span class="text-sm text-gray-600">{{ $order->no_meja ?? 'N/A' }}</span>
+                                        <span class="text-sm text-gray-600">{{ $order->meja?->nomor_meja ?? 'N/A' }}</span>
                                     </td>
                                     <td class="py-3">
                                         <span class="text-sm text-gray-600">{{ $order->user?->name ?? 'N/A' }}</span>

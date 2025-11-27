@@ -74,7 +74,7 @@ Route::middleware(['auth'])->prefix('kasir')->name('kasir.')->group(function () 
     Route::post('/transaksi/{id_order}', [KasirController::class, 'storeTransaksi'])->name('transaksi.store');
     Route::get('/transaksi/{id_transaksi}', [KasirController::class, 'showTransaksi'])->name('transaksi.show');
     Route::get('/transaksi/{id_transaksi}/print', [KasirController::class, 'printStruk'])->name('transaksi.print');
-    Route::delete('/transaksi/{id_transaksi}', [KasirController::class, 'cancelTransaksi'])->name('transaksi.cancel');
+    Route::patch('/transaksi/{id_transaksi}', [KasirController::class, 'cancelTransaksi'])->name('transaksi.cancel');
 });
 
 // Owner Routes
@@ -112,7 +112,7 @@ Route::middleware(['auth', 'check.role:Pelanggan'])->prefix('pelanggan')->name('
     Route::post('/order', [PelangganController::class, 'storeSelfOrder'])->name('order.store');
     Route::get('/orders', [PelangganController::class, 'myOrders'])->name('orders');
     Route::get('/order/{id_order}', [PelangganController::class, 'showOrder'])->name('order.show');
-    Route::delete('/order/{id_order}', [PelangganController::class, 'cancelOrder'])->name('order.cancel');
+    Route::patch('/order/{id_order}', [PelangganController::class, 'cancelOrder'])->name('order.cancel');
 });
 
 // Redirect authenticated users to their dashboard

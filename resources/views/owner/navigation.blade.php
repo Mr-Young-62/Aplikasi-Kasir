@@ -33,11 +33,32 @@
     </div>
   </div>
 
-  <!-- Analytics -->
-  <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-100 transition-all group">
-    <i class="fas fa-chart-pie w-5 text-center group-hover:scale-110 transition-transform"></i>
-    <span class="font-medium">Analytics</span>
-  </a>
+  <!-- Analytics Dropdown -->
+  <div class="space-y-1">
+    <button class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-100 transition-all group">
+      <i class="fas fa-chart-pie w-5 text-center group-hover:scale-110 transition-transform"></i>
+      <span class="font-medium">Analytics</span>
+      <i class="fas fa-chevron-down ml-auto text-xs"></i>
+    </button>
+    <div class="ml-8 space-y-1">
+      <a href="{{ route('owner.laporan.penjualan') }}" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all">
+        <i class="fas fa-chart-line w-4 text-center"></i>
+        <span>Sales Analytics</span>
+      </a>
+      <a href="{{ route('owner.laporan.masakan') }}" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all">
+        <i class="fas fa-pizza-slice w-4 text-center"></i>
+        <span>Menu Analytics</span>
+      </a>
+      <a href="{{ route('owner.laporan.waiter') }}" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all">
+        <i class="fas fa-users-cog w-4 text-center"></i>
+        <span>Staff Analytics</span>
+      </a>
+      <a href="{{ route('owner.laporan.pelanggan') }}" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all">
+        <i class="fas fa-user-chart w-4 text-center"></i>
+        <span>Customer Analytics</span>
+      </a>
+    </div>
+  </div>
 
   <!-- Settings -->
   <a href="{{ route('profile.edit') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-100 transition-all group">
